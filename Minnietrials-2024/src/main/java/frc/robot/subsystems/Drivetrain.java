@@ -4,12 +4,48 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ 
 
-public class ExampleSubsystem extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {
+  private final TalonFX LeftDrive; 
+  private final TalonFX RightDrive;
+  private final DifferentialDrive BothDrive;
+
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public Drivetrain() {
+    LeftDrive = new TalonFX(2491);
+    RightDrive = new TalonFX(2491);
+    BothDrive = new DifferentialDrive(RightDrive, LeftDrive);
+    
+    LeftDrive.setNeutralMode(NeutralModeValue.Brake);
+    LeftDrive.setSafetyEnabled(false);
+
+  }
+
+  public void adrive(double speed, double rotation){
+      BothDrive.arcadeDrive(speed, rotation);
+  }
+
+  public void tdrive(double lspeed, double rspeed){
+    BothDrive.tankDrive(lspeed, rspeed);
+  }
+
+  public void stop(){
+    BothDrive.tankDrive(0, 0);
+  }
+
+
+ /*  public void SetMaxPow(double MaxPow ){
+    LeftDrive.configPeakOutputForward(double MaxPow);
+
+  }
 
   /**
    * Example command factory method.

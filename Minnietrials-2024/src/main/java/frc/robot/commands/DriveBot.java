@@ -4,23 +4,27 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends Command {
+public class DriveBot extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+  private final Drivetrain commandDrivetrain;
+  private final Joystick commandJoystick;
 
-  /**
+  /** 
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public DriveBot(Drivetrain drivesystem, Joystick drivejoy) {
+    commandDrivetrain = drivesystem;
+    commandJoystick = drivejoy;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(drivesystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +33,13 @@ public class ExampleCommand extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    // Uses the getThrottle function thing to set how much we have moved our throttle(the little switch)
+    double throttle = commandJoystick.getThrottle();
+    // Uses our previously made Arcade drive and throttle to set how much moving the joystick will rotate or move the robot)
+    commandDrivetrain.adrive(commandJoystick.getY()*(throttle + 1.3), commandJoystick.getZ()*0.50);
+  }
+    
 
   // Called once the command ends or is interrupted.
   @Override
