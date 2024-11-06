@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.OperatorConstants;
  
 
 public class Drivetrain extends SubsystemBase {
@@ -20,8 +21,8 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public Drivetrain() {
-    LeftDrive = new TalonFX(2491);
-    RightDrive = new TalonFX(2491);
+    LeftDrive = new TalonFX((OperatorConstants.leftDriveID));
+    RightDrive = new TalonFX((OperatorConstants.rightDriveID));
     BothDrive = new DifferentialDrive(RightDrive, LeftDrive);
     
     LeftDrive.setNeutralMode(NeutralModeValue.Brake);

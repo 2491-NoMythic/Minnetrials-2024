@@ -16,5 +16,10 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int joystickPort = 2491;
+    public static final int rightDriveID = 2491;
+    public static final int leftDriveID = 2491;
+    public static final int shootID = 2491;
+    public static final int inID = 2491;
+
   }
 }
