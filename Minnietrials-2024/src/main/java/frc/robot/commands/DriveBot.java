@@ -4,10 +4,12 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 
 /** An example command that uses an example subsystem. */
 public class DriveBot extends Command {
@@ -36,11 +38,19 @@ public class DriveBot extends Command {
   public void execute() {
     // Uses the getThrottle function thing to set how much we have moved our throttle(the little switch)
     double throttle = commandJoystick.getThrottle();
-    // Uses our previously made Arcade drive and throttle to set how much moving the joystick will rotate or move the robot)
-    commandDrivetrain.adrive(commandJoystick.getY()*(throttle + 1.3), commandJoystick.getZ()*0.50);
-  }
-    
+    double yAxis = commandJoystick.getY();
 
+    
+    // If the absolute value of our throttle(how much we are moving the stick forward or back) is less than our deadzone, don't move.
+    if (Math.abs(yAxis) < Constants.deadZone)
+      yAxis = 0;
+  System.out.println(yAxis);
+    // Uses our previously made Arcade drive and throttle to set how much moving the joystick will rotate or move the robot)
+      commandDrivetrain.adrive(yAxis*(throttle + 1.3), commandJoystick.getZ()*0.50);
+
+  }
+
+    
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
