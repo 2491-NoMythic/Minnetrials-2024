@@ -7,8 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveBot;
+import frc.robot.commands.IntakeBot;
+import frc.robot.commands.ShootBot;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,7 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain conDrivetrain = new Drivetrain();
+  private final Shooter conShooter = new Shooter();
+  private final Intake conIntake = new Intake();
   private final Joystick conJoystick = new Joystick(OperatorConstants.joystickPort);
+  private final PS4Controller conPS4 = new PS4Controller(OperatorConstants.ps4Port);
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -53,8 +61,10 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     conDrivetrain.setDefaultCommand(new DriveBot(conDrivetrain, conJoystick));
+    conShooter.setDefaultCommand(new ShootBot(conJoystick, conShooter));
+    conIntake.setDefaultCommand(new IntakeBot(conIntake, conPS4));
     //m_driverController.b().whileTrue(Drivetrain.exampleMethodCommand());
-  }
+  } 
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

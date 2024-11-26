@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -19,17 +21,25 @@ import frc.robot.Constants.OperatorConstants;
 
 public class Drivetrain extends SubsystemBase {
   private final TalonFX LeftDrive; 
-  private final CANSparkMax RightDrive;
+  private final TalonFX RightDrive;
   private final DifferentialDrive BothDrive;
 
   /** Creates a new ExampleSubsystem. */
   public Drivetrain() {
     LeftDrive = new TalonFX((OperatorConstants.leftDriveID));
-    RightDrive = new CANSparkMax(OperatorConstants.rightDriveID,MotorType.kBrushless);
+    RightDrive = new TalonFX((OperatorConstants.rightDriveID));
     BothDrive = new DifferentialDrive(RightDrive, LeftDrive);
     
     LeftDrive.setNeutralMode(NeutralModeValue.Brake);
     LeftDrive.setSafetyEnabled(false);
+    RightDrive.setNeutralMode(NeutralModeValue.Brake);
+    RightDrive.setSafetyEnabled(false);
+
+   // PID 
+   // VelocityVoltage(0-12) 
+   // Option 2: Know our maximum allowed speed(10.5ft per second, about 7 mph). Find out what is the max motor voltage that will NEVER go above 10.5ft per second. Maybe - a bit from that,
+   // monitor our speed and cap it at our Max voltage
+
 
   }
 
@@ -45,11 +55,13 @@ public class Drivetrain extends SubsystemBase {
     BothDrive.tankDrive(0, 0);
   }
 
-
- /*  public void SetMaxPow(double MaxPow ){
-    LeftDrive.configPeakOutputForward(double MaxPow);
-
+  public Double GetCurrentSpeed(){
+   return LeftDrive.getVelocity().getValueAsDouble(); 
   }
+
+
+
+
 
   /**
    * Example command factory method.

@@ -16,6 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int joystickPort = 1;
+    public static final int ps4Port = 2;
     public static final int rightDriveID = 22;
     public static final int leftDriveID = 2491;
     public static final int shootID = 2491;
@@ -24,4 +25,7 @@ public final class Constants {
   }
 
     public static final double deadZone = 0.15;
+    //The constant that we will mutiply with our speed to keep it below 10.5 ft per second. If we find that moving the stick to 0.5 is 9fs,
+    // and 0.6 is 11fs, we will multiply our speed by 0.5(in drivetrain), so that it's max speed cannot be greater than 0.5. (1*0.5 = 0.5)
+    public static final double maxDrivetrainPow = 1;
 }

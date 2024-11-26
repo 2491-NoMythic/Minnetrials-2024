@@ -37,16 +37,16 @@ public class DriveBot extends Command {
   @Override
   public void execute() {
     // Uses the getThrottle function thing to set how much we have moved our throttle(the little switch)
-    double throttle = commandJoystick.getThrottle();
     double yAxis = commandJoystick.getY();
 
     
     // If the absolute value of our throttle(how much we are moving the stick forward or back) is less than our deadzone, don't move.
-    if (Math.abs(yAxis) < Constants.deadZone)
+    if (Math.abs(yAxis) < Constants.deadZone){
       yAxis = 0;
+    }
   System.out.println(yAxis);
     // Uses our previously made Arcade drive and throttle to set how much moving the joystick will rotate or move the robot)
-      commandDrivetrain.adrive(yAxis*(throttle + 1.3), commandJoystick.getZ()*0.50);
+      commandDrivetrain.adrive(yAxis*Constants.maxDrivetrainPow, commandJoystick.getZ()*0.50);
 
   }
 

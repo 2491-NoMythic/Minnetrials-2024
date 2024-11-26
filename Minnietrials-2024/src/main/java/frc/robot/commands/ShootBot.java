@@ -36,8 +36,9 @@ public class ShootBot extends InstantCommand {
   @Override
   public void execute() {
     // Uses the getThrottle function thing to set how much we have moved our throttle(the little switch)
-    if(commandJoystick.getRawButton(1))
+    if(commandJoystick.getRawButtonPressed(1)){
         commandShooter.shoot(0.5);
+    }
   }
 
     
