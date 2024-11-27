@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
 
 public class Shooter extends SubsystemBase{
-    private final CANSparkMax ShootMotor;
+    private final TalonFX ShootMotor;
 public Shooter(){
-    ShootMotor = new CANSparkMax(OperatorConstants.shootID, MotorType.kBrushless);
-    //ShootMotor.setNeutralMode(NeutralModeValue.Brake);
+    ShootMotor = new TalonFX(OperatorConstants.shootID);
+    ShootMotor.setNeutralMode(NeutralModeValue.Brake);
 }
 
     public void shoot(double shootspeed){

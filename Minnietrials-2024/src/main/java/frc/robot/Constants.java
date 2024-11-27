@@ -17,10 +17,10 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int joystickPort = 1;
     public static final int ps4Port = 2;
-    public static final int rightDriveID = 22;
-    public static final int leftDriveID = 2491;
-    public static final int shootID = 2491;
-    public static final int inID = 2491;
+    public static final int rightDriveID = 1;
+    public static final int leftDriveID = 2;
+    public static final int shootID = 4;
+    public static final int inID = 3;
 
   }
 
