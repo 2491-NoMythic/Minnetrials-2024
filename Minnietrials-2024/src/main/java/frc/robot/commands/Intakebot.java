@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -32,15 +33,14 @@ public class IntakeBot extends InstantCommand {
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ps4YAxis = commandController.getLeftY();
+    double ps4YAxisL = commandController.getLeftY();
 
-    if(!commandController.getCircleButton()){
-      commandIntake.norun();
+    if (Math.abs(ps4YAxisL) < Constants.deadZone){
+      ps4YAxisL = 0;
     }
 
-    if(commandController.getCircleButton()){
-      commandIntake.run(ps4YAxis);
-    }
+      commandIntake.run(ps4YAxisL);
+
   }
    
   // Called once the command ends or is interrupted.

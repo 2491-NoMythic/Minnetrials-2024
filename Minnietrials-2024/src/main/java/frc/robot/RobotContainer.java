@@ -61,7 +61,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     conDrivetrain.setDefaultCommand(new DriveBot(conDrivetrain, conJoystick));
-    conShooter.setDefaultCommand(new ShootBot(conJoystick, conShooter));
+    conShooter.setDefaultCommand(new ShootBot(conPS4, conShooter));
     conIntake.setDefaultCommand(new IntakeBot(conIntake, conPS4));
     //m_driverController.b().whileTrue(Drivetrain.exampleMethodCommand());
   } 

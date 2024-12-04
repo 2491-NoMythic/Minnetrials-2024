@@ -55,9 +55,16 @@ public class Drivetrain extends SubsystemBase {
     BothDrive.tankDrive(0, 0);
   }
 
-  public Double GetCurrentSpeed(){
+  public Double GetPosition(){
+   return LeftDrive.getPosition().getValueAsDouble(); 
+  }
+
+  public Double GetSpeed(){
    return LeftDrive.getVelocity().getValueAsDouble(); 
   }
+
+
+ 
 
 
 
