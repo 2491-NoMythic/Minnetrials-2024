@@ -6,46 +6,45 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Drivetrain;
 
-public class ShootAuto extends Command { 
-    Shooter autoShooter;
-    double shootSpeed, shootTime;
-    Timer shootTimer;
-
-  /** Creates a new ShootAuto. */
-  public ShootAuto(Shooter shoot, double speed, double time) {
-    autoShooter=shoot;
-    shootTime=time;
-    shootSpeed=speed;
-    shootTimer=new Timer();
-
-  
-    // Use addRequirements() here to declare subsystem dependencies 
- addRequirements(autoShooter); }
+public class DriveAuto extends Command {
+  Drivetrain drivetrain;
+  double driveSpeed, time;
+  Timer driveTimer;
+  /** Creates a new DriveTime. */
+  public DriveAuto(Drivetrain drivetrain, double speed, double time) { 
+    this.drivetrain=drivetrain;
+    this.time=time;
+    this.driveSpeed=speed;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drivetrain);
+    driveTimer=new Timer();
+  }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() { 
-    shootTimer.start();
+  public void initialize() {
+    driveTimer.start();    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    autoShooter.shoot(shootSpeed);
+    drivetrain.adrive(-driveSpeed, 0);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    autoShooter.stop();
+    drivetrain.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return shootTimer.get()>shootTime;
-
+    return driveTimer.get()>time;
+   
   }
 }

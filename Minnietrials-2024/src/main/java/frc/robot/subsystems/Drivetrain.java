@@ -60,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public Double GetSpeed(){
-   return LeftDrive.getVelocity().getValueAsDouble(); 
+   return LeftDrive.getVelocity().getValueAsDouble()/12*-1; 
   }
 
 

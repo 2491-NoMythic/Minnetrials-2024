@@ -5,17 +5,23 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoGroup;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveBot;
 import frc.robot.commands.IntakeBot;
+import frc.robot.commands.IntakeButton;
 import frc.robot.commands.ShootBot;
+import frc.robot.commands.ShootButton;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.simulation.PS4ControllerSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -31,11 +37,6 @@ public class RobotContainer {
   private final Intake conIntake = new Intake();
   private final Joystick conJoystick = new Joystick(OperatorConstants.joystickPort);
   private final PS4Controller conPS4 = new PS4Controller(OperatorConstants.ps4Port);
-
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -58,6 +59,8 @@ public class RobotContainer {
    // new Trigger(Drivetrain::exampleCondition)
        // .onTrue(new DriveBot(Drivetrain));
 
+   new Trigger(conPS4::getR2Button).whileTrue(new IntakeButton(conIntake));
+   new Trigger(conPS4::getL2Button).whileTrue(new ShootButton(conShooter, conIntake));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     conDrivetrain.setDefaultCommand(new DriveBot(conDrivetrain, conJoystick));
@@ -73,6 +76,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(conDrivetrain, conJoystick);
+    return new AutoGroup(conDrivetrain, conShooter);
   }
 }

@@ -46,9 +46,9 @@ public class DriveBot extends Command {
     // Uses our previously made Arcade drive and throttle to set how much moving the joystick will rotate or move the robot)
       commandDrivetrain.adrive(yAxis*Constants.maxDrivetrainPow, commandJoystick.getZ()*-0.50);
       
-     double curPosition = commandDrivetrain.GetPosition();
-      System.out.println(curPosition);
-      
+    // double curPosition = commandDrivetrain.GetPosition();
+    // System.out.println(curPosition);
+     
       double curSpeed = commandDrivetrain.GetSpeed();
       System.out.println(curSpeed);
   }

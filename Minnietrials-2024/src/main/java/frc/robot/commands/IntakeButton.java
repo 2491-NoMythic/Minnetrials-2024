@@ -13,15 +13,13 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeBot extends InstantCommand {
-  private final Intake commandIntake;
-  private final PS4Controller commandController;
+public class IntakeButton extends InstantCommand {
+  private final Intake buttonIntake;
 
-  public IntakeBot(Intake inSystem, PS4Controller inControl) {
+  public IntakeButton(Intake inButton) {
     // Use addRequirements() here to declare subsystem dependencies.
-    commandIntake = inSystem;
-    commandController = inControl;
-    addRequirements(inSystem);
+    buttonIntake = inButton;
+    addRequirements(inButton);
 
   }
 
@@ -33,19 +31,24 @@ public class IntakeBot extends InstantCommand {
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ps4YAxisL = commandController.getLeftY();
-
-    if (Math.abs(ps4YAxisL) < Constants.deadZone){
-      ps4YAxisL = 0;
-    }
-      commandIntake.run(ps4YAxisL);
-     Boolean held = commandIntake.isHeld();
+     Boolean held = buttonIntake.isHeld();
      System.out.println(held);
+
+     if(held){
+      buttonIntake.norun();
+     }
+     else
+     {
+      buttonIntake.run(0.5);
+     }
+     
   }
    
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    buttonIntake.norun();
+  }
 
   // Returns true when the command should end.
   @Override

@@ -9,19 +9,20 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeBot extends InstantCommand {
-  private final Intake commandIntake;
-  private final PS4Controller commandController;
+public class ShootButton extends InstantCommand {
+  private final Shooter buttonShooter;
+  private final Intake butInShooter;
 
-  public IntakeBot(Intake inSystem, PS4Controller inControl) {
+  public ShootButton(Shooter shootButton, Intake shootIn) {
     // Use addRequirements() here to declare subsystem dependencies.
-    commandIntake = inSystem;
-    commandController = inControl;
-    addRequirements(inSystem);
+    buttonShooter = shootButton;
+    butInShooter = shootIn;
+    addRequirements(shootButton, shootIn);
 
   }
 
@@ -31,21 +32,18 @@ public class IntakeBot extends InstantCommand {
 
   }
     // Called every time the scheduler runs while the command is scheduled.
-  @Override
+  @Override 
   public void execute() {
-    double ps4YAxisL = commandController.getLeftY();
-
-    if (Math.abs(ps4YAxisL) < Constants.deadZone){
-      ps4YAxisL = 0;
-    }
-      commandIntake.run(ps4YAxisL);
-     Boolean held = commandIntake.isHeld();
-     System.out.println(held);
+    buttonShooter.shoot(1); 
+    butInShooter.run(0.5);    
   }
    
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    buttonShooter.stop();
+    butInShooter.norun();
+  }
 
   // Returns true when the command should end.
   @Override
@@ -53,4 +51,3 @@ public class IntakeBot extends InstantCommand {
     return false;
   }
 }
-

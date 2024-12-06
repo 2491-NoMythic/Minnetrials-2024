@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.Timer;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -21,7 +23,6 @@ import frc.robot.subsystems.Shooter;
 public class ShootBot extends InstantCommand {
     private final PS4Controller commandController;
     private final Shooter commandShooter;
-
   public ShootBot(PS4Controller shootroller, Shooter sshooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     commandController = shootroller;
